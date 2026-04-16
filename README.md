@@ -59,6 +59,31 @@ Preview URL:
 
 - `http://127.0.0.1:4173`
 
+## Deploy to VPS
+
+The frontend is deployed to the VPS as static files in:
+
+- `/var/www/liza_alert_web`
+
+Run deploy from the project root:
+
+```bash
+bash scripts/deploy.sh
+```
+
+Default deploy target:
+
+- host: `185.21.8.116`
+- port: `2222`
+- user: `denis`
+- site: `https://lizaalertspb.ru`
+
+Override values if needed:
+
+```bash
+DEPLOY_USER=denis DEPLOY_HOST=185.21.8.116 DEPLOY_PORT=2222 bash scripts/deploy.sh
+```
+
 ## Environment
 
 Template file:
