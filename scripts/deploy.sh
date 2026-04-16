@@ -50,8 +50,13 @@ fi
 info "Обновляю репозиторий"
 git pull --ff-only
 
-info "Устанавливаю зависимости"
-npm install
+if [[ -f package-lock.json ]]; then
+  info "Устанавливаю зависимости через npm ci"
+  npm ci
+else
+  info "Устанавливаю зависимости через npm install"
+  npm install
+fi
 
 info "Собираю web-приложение"
 npm run build
