@@ -18,7 +18,7 @@ type CaseSummary = {
   } | null
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'https://lizaalertspb.ru'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api'
 
 function App() {
   const [cases, setCases] = useState<CaseSummary[]>([])
@@ -33,7 +33,7 @@ function App() {
         setLoading(true)
         setError(null)
 
-        const response = await fetch(`${API_BASE_URL}/api/v1/lost-cases`)
+        const response = await fetch(`${API_BASE_URL}/v1/lost-cases`)
         if (!response.ok) {
           throw new Error(`API returned ${response.status}`)
         }
