@@ -3,13 +3,9 @@
 set -euo pipefail
 
 APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-REMOTE_HOST="${DEPLOY_HOST:-185.21.8.116}"
-REMOTE_PORT="${DEPLOY_PORT:-2222}"
-REMOTE_USER="${DEPLOY_USER:-denis}"
 REMOTE_DIR="${DEPLOY_DIR:-/var/www/liza_alert_web}"
-REMOTE_APP_DIR="${DEPLOY_APP_DIR:-/home/denis/apps/liza_alert_web}"
 SITE_URL="${DEPLOY_SITE_URL:-https://lizaalertspb.ru}"
-LOCAL_USER="$(whoami)"
+CURRENT_USER="$(whoami)"
 
 info() {
   printf '[INFO] %s\n' "$1"
@@ -24,15 +20,15 @@ require_command() {
   command -v "$1" >/dev/null 2>&1 || fail "Команда '$1' не найдена"
 }
 
-require_command ssh
 require_command curl
 require_command git
+require_command npm
+require_command sudo
 
 cd "$APP_DIR"
 
 info "Каталог проекта: $APP_DIR"
-info "Локальный пользователь: $LOCAL_USER"
-info "Целевой deploy: $REMOTE_USER@$REMOTE_HOST:$REMOTE_PORT"
+info "Пользователь: $CURRENT_USER"
 
 if [[ ! -f package.json ]]; then
   fail "Не найден package.json. Запусти скрипт из репозитория liza_alert_web"
@@ -51,9 +47,19 @@ if [[ -n "$(git ls-files --others --exclude-standard)" ]]; then
   fail "Есть неотслеживаемые файлы. Сначала убери их или добавь в .gitignore."
 fi
 
-info "Обновляю и собираю web на VPS"
-ssh -o BatchMode=yes -o ConnectTimeout=10 -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
-  "mkdir -p '$REMOTE_APP_DIR' && if [ -d '$REMOTE_APP_DIR/.git' ]; then cd '$REMOTE_APP_DIR' && git pull --ff-only; else git clone https://github.com/Denis0872/liza_alert_web.git '$REMOTE_APP_DIR' && cd '$REMOTE_APP_DIR'; fi && npm install && npm run build && sudo install -d -m 755 '$REMOTE_DIR' && sudo rm -rf '$REMOTE_DIR'/* && sudo cp -r '$REMOTE_APP_DIR'/dist/. '$REMOTE_DIR'/"
+info "Обновляю репозиторий"
+git pull --ff-only
+
+info "Устанавливаю зависимости"
+npm install
+
+info "Собираю web-приложение"
+npm run build
+
+info "Публикую статику в $REMOTE_DIR"
+sudo install -d -m 755 "$REMOTE_DIR"
+sudo rm -rf "$REMOTE_DIR"/*
+sudo cp -r dist/. "$REMOTE_DIR"/
 
 info "Проверяю сайт после деплоя"
 HTTP_CODE="000"

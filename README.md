@@ -59,43 +59,33 @@ Preview URL:
 
 - `http://127.0.0.1:4173`
 
-## Deploy to VPS
-
-The frontend is deployed from git on the VPS.
+## Deploy on VPS
 
 Server-side layout:
 
-- source repo: `/home/denis/apps/liza_alert_web`
-- built static output is copied to: `/var/www/liza_alert_web`
+- source repo: `/srv/liza_alert_web`
+- built static output: `/var/www/liza_alert_web`
 
-Run deploy from the project root:
+Run deploy directly on the VPS:
 
 ```bash
+cd /srv/liza_alert_web
 bash scripts/deploy.sh
 ```
 
 What the script does:
 
-1. checks that local git working tree is clean
-2. connects to the VPS via SSH
-3. updates `/home/denis/apps/liza_alert_web` with `git pull --ff-only`
-4. runs `npm install` and `npm run build` on the VPS
+1. checks that the git working tree is clean
+2. runs `git pull --ff-only`
+3. runs `npm install`
+4. runs `npm run build`
 5. copies built `dist/` to `/var/www/liza_alert_web`
 6. verifies `https://lizaalertspb.ru`
 
-Default deploy target:
-
-- host: `185.21.8.116`
-- port: `2222`
-- user: `denis`
-- remote app dir: `/home/denis/apps/liza_alert_web`
-- web root: `/var/www/liza_alert_web`
-- site: `https://lizaalertspb.ru`
-
-Override values if needed:
+Optional overrides:
 
 ```bash
-DEPLOY_USER=denis DEPLOY_HOST=185.21.8.116 DEPLOY_PORT=2222 DEPLOY_APP_DIR=/home/denis/apps/liza_alert_web bash scripts/deploy.sh
+DEPLOY_DIR=/var/www/liza_alert_web DEPLOY_SITE_URL=https://lizaalertspb.ru bash scripts/deploy.sh
 ```
 
 ## Environment
