@@ -2,6 +2,14 @@
 
 Web frontend for Liza Alert.
 
+## Project docs
+
+- [Product vision](docs/00_product_vision.md)
+- [MVP roadmap](docs/01_mvp_roadmap.md)
+- [Tech stack recommendation](docs/02_tech_stack.md)
+- [Collaboration and reports](docs/03_collaboration_and_reports.md)
+- [Current status report](docs/04_status_report_2026-04-16.md)
+
 ## Stack
 
 - React
