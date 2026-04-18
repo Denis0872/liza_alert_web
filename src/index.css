@@ -347,6 +347,59 @@ input {
   gap: 14px;
 }
 
+.download-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: center;
+}
+
+.download-card {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: center;
+  width: min(100%, 460px);
+}
+
+.download-card-ios {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(251, 146, 60, 0.3), transparent 40%),
+    linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.download-card-android {
+  background:
+    radial-gradient(circle at 90% 12%, rgba(251, 146, 60, 0.3), transparent 40%),
+    linear-gradient(135deg, #111827 0%, #374151 100%);
+}
+
+.download-card-actions {
+  display: grid;
+  gap: 10px;
+  max-width: 260px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.download-card-header {
+  padding-bottom: 4px;
+  text-align: center;
+}
+
+.download-os-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #fff;
+  font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+  letter-spacing: -0.02em;
+}
+
 .news-card {
   border-radius: 18px;
   border: 1px solid var(--line);
@@ -851,6 +904,10 @@ th {
   }
 
   .news-page-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .download-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -1,4 +1,4 @@
-import { ArrowRight, BellRing, HeartHandshake, ShieldAlert, Users } from "lucide-react"
+import { Apple, ArrowRight, BellRing, Download, HeartHandshake, ShieldAlert, Smartphone, Users } from "lucide-react"
 import { Link, useSearchParams } from "react-router-dom"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Badge } from "@/components/ui/badge"
@@ -53,9 +53,6 @@ export function LandingPage() {
             <Link className={cn(buttonVariants({ size: "lg" }))} to="/apply">
               Подать заявку
               <ArrowRight size={18} />
-            </Link>
-            <Link className={cn(buttonVariants({ variant: "secondary", size: "lg" }))} to="/app/dashboard">
-              Я доброволец
             </Link>
           </div>
           <div className="hotline-strip mt-4">
@@ -172,6 +169,43 @@ export function LandingPage() {
         <div className="subscribe-row">
           <Input className="h-11 bg-white/85" placeholder="Введите телефон или email" />
           <Button className="h-11 px-6">Подписаться</Button>
+        </div>
+      </section>
+
+      <section className="landing-section">
+        <div className="section-head">
+          <h2>Скачать приложение</h2>
+          <Badge variant="outline">Скоро</Badge>
+        </div>
+        <div className="download-grid">
+          <Card className="download-card download-card-ios">
+            <CardHeader className="download-card-header">
+              <CardTitle className="download-os-title">
+                <Apple className="size-7 text-white" />
+                iOS
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="download-card-actions">
+              <Button className="bg-orange-500 text-white hover:bg-orange-600" disabled>
+                <Download className="size-4" />
+                Скачать для iOS
+              </Button>
+            </CardContent>
+          </Card>
+          <Card className="download-card download-card-android">
+            <CardHeader className="download-card-header">
+              <CardTitle className="download-os-title">
+                <Smartphone className="size-7 text-white" />
+                Android
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="download-card-actions">
+              <Button className="bg-orange-500 text-white hover:bg-orange-600" disabled>
+                <Download className="size-4" />
+                Скачать для Android
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

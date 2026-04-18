@@ -2,13 +2,14 @@
 
 import * as React from "react"
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
-import { ChevronDown, PhoneCall } from "lucide-react"
+import { BookOpenText, ChevronDown, Newspaper, ShieldAlert, UserRound } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 
 type MenuLink = {
   title: string
   url: string
+  icon?: React.ReactNode
 }
 
 type MenuCategory = {
@@ -27,21 +28,21 @@ export const defaultMenuCategories: MenuCategory[] = [
     id: 1,
     title: "Медиа",
     items: [
-      { title: "Новости", url: "/news" },
-      { title: "Публикации", url: "/publications" },
+      { title: "Новости", url: "/news", icon: <Newspaper className="size-4 text-orange-300" /> },
+      { title: "Публикации", url: "/publications", icon: <BookOpenText className="size-4 text-orange-300" /> },
     ],
   },
   {
     id: 2,
     title: "Об отряде",
-    items: [{ title: "О нас", url: "/about" }],
+    items: [{ title: "О нас", url: "/about", icon: <UserRound className="size-4 text-orange-300" /> }],
   },
   {
     id: 3,
     title: "Новичкам",
     items: [
-      { title: "Новичкам", url: "/newcomers" },
-      { title: "Правила безопасности", url: "/safety" },
+      { title: "Новичкам", url: "/newcomers", icon: <BookOpenText className="size-4 text-orange-300" /> },
+      { title: "Правила безопасности", url: "/safety", icon: <ShieldAlert className="size-4 text-orange-300" /> },
     ],
   },
 ]
@@ -59,14 +60,14 @@ export function ScrollNavigationMenu({
   })
 
   return (
-    <motion.header
-      animate={{
-        boxShadow: isScrolled ? "0 10px 28px rgba(15, 23, 42, 0.22)" : "0 0 0 rgba(0,0,0,0)",
-      }}
-      className={`sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/90 backdrop-blur-xl ${className}`}
-      initial={false}
-    >
-      <nav className="mx-auto flex h-18 w-full max-w-6xl items-center justify-between gap-3 px-4">
+    <header className={`sticky top-0 z-50 w-full px-3 pt-3 ${className}`}>
+      <motion.nav
+        animate={{
+          boxShadow: isScrolled ? "0 14px 34px rgba(15, 23, 42, 0.38)" : "0 8px 20px rgba(15, 23, 42, 0.2)",
+        }}
+        className="mx-auto flex h-18 w-full max-w-6xl items-center justify-between gap-3 rounded-2xl border border-slate-700/90 bg-slate-950/95 px-4"
+        initial={false}
+      >
         <Link className="inline-flex items-center" to="/">
           <img alt="ЛизаАлерт" className="h-9 w-auto object-contain" src="/lizaalert-logo.svg" />
         </Link>
@@ -84,10 +85,16 @@ export function ScrollNavigationMenu({
                 type="button"
               >
                 {category.title}
-                <ChevronDown className="size-4 text-slate-300 transition-transform group-hover:translate-y-[1px]" />
+                <motion.span
+                  animate={{ rotate: hoveredCategory === category.id ? 180 : 0 }}
+                  className="inline-flex"
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                >
+                  <ChevronDown className="size-4 text-slate-300" />
+                </motion.span>
                 {hoveredCategory === category.id ? (
                   <motion.div
-                    className="absolute inset-0 -z-10 rounded-md bg-slate-800/90"
+                    className="absolute inset-0 -z-10 rounded-md border border-slate-500/70 bg-slate-700/95"
                     layoutId="category-hover"
                   />
                 ) : null}
@@ -96,16 +103,17 @@ export function ScrollNavigationMenu({
                 {hoveredCategory === category.id ? (
                   <motion.div
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    className="absolute top-full left-0 mt-2 w-58 rounded-xl border border-slate-700 bg-slate-900 p-2 shadow-2xl"
+                    className="absolute top-full left-0 mt-2 w-64 rounded-xl border border-slate-500 bg-slate-900 p-2 shadow-2xl"
                     exit={{ opacity: 0, y: -8, scale: 0.98 }}
                     initial={{ opacity: 0, y: -8, scale: 0.98 }}
                   >
                     {category.items.map((item) => (
                       <Link
-                        className="block rounded-md px-3 py-2 text-sm font-medium text-slate-100 transition-colors hover:bg-slate-800 hover:text-white"
+                        className="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium !text-white transition-colors hover:bg-slate-700 hover:!text-white"
                         key={item.title}
                         to={item.url}
                       >
+                        {item.icon}
                         {item.title}
                       </Link>
                     ))}
@@ -117,18 +125,18 @@ export function ScrollNavigationMenu({
         </div>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <div className="inline-flex items-center gap-1 rounded-md border border-slate-700 bg-slate-900/80 px-2.5 py-1 text-xs font-semibold text-slate-100">
-            <PhoneCall className="size-3.5 text-orange-300" />
-            8 800 700 54 52
-          </div>
-          <Button asChild className="border-slate-200 bg-white text-slate-900 hover:bg-slate-100" variant="outline">
-            <Link to="/app/dashboard">Войти в кабинет</Link>
+          <Button
+            asChild
+            className="border-orange-300 bg-orange-300 text-slate-900 hover:bg-orange-400"
+            variant="outline"
+          >
+            <Link to="/app/dashboard">Войти</Link>
           </Button>
           <Button asChild className="bg-orange-500 text-white hover:bg-orange-600">
-            <Link to="/apply">Оставить заявку</Link>
+            <Link to="/app/dashboard">Стать добровольцем</Link>
           </Button>
         </div>
-      </nav>
-    </motion.header>
+      </motion.nav>
+    </header>
   )
 }
