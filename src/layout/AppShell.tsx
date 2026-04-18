@@ -7,8 +7,8 @@ import {
   Megaphone,
   UserRound,
 } from 'lucide-react'
-import { NavLink, Outlet } from 'react-router-dom'
-import { Button } from '../components/ui/Button'
+import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
 
 const items = [
   { to: '/app/dashboard', label: 'Панель', icon: LayoutGrid },
@@ -21,13 +21,13 @@ export function AppShell() {
   return (
     <div className="frame">
       <aside className="sidebar">
-        <div className="brand">
+        <Link className="brand" to="/">
           <img alt="ЛизаАлерт" className="brand-logo brand-logo-compact" src="/lizaalert-logo.svg" />
           <div>
             <p className="brand-name">Liza Alert</p>
             <p className="brand-sub">MVP Frontend</p>
           </div>
-        </div>
+        </Link>
         <nav className="menu">
           {items.map((item) => {
             const Icon = item.icon

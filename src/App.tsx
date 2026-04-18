@@ -3,9 +3,13 @@ import { AppShell } from './layout/AppShell'
 import { ApplyPage } from './pages/ApplyPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { LandingPage } from './pages/LandingPage'
+import DemoOne from './pages/demo'
+import { NewsDetailsPage } from './pages/NewsDetailsPage'
+import { NewsPage } from './pages/NewsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { NotificationsPage } from './pages/NotificationsPage'
 import { ProfilePage } from './pages/ProfilePage'
+import { PublicSectionPage } from './pages/PublicSectionPage'
 import { SearchDetailsPage } from './pages/SearchDetailsPage'
 import { SearchesPage } from './pages/SearchesPage'
 
@@ -17,6 +21,22 @@ const router = createBrowserRouter([
   {
     path: '/apply',
     element: <ApplyPage />,
+  },
+  {
+    path: '/news',
+    element: <NewsPage />,
+  },
+  {
+    path: '/news/:id',
+    element: <NewsDetailsPage />,
+  },
+  { path: '/publications', element: <PublicSectionPage /> },
+  { path: '/about', element: <PublicSectionPage /> },
+  { path: '/newcomers', element: <PublicSectionPage /> },
+  { path: '/safety', element: <PublicSectionPage /> },
+  {
+    path: '/demo/simple-header',
+    element: <DemoOne />,
   },
   {
     path: '/app',

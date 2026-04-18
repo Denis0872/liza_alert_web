@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../components/ui/Button'
+import { Button } from '@/components/ui/button'
 import { PageHeader } from '../components/ui/PageHeader'
 import { Panel } from '../components/ui/Panel'
 import { StatusBadge } from '../components/ui/StatusBadge'

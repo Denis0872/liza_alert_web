@@ -1,4 +1,6 @@
-import { Button, ButtonLink } from '../components/ui/Button'
+import { Link } from "react-router-dom"
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from "@/lib/utils"
 import { TextInput } from '../components/ui/TextInput'
 
 export function ApplyPage() {
@@ -19,9 +21,9 @@ export function ApplyPage() {
         </div>
         <div className="hero-actions">
           <Button type="button">Отправить заявку</Button>
-          <ButtonLink to="/" variant="secondary">
+          <Link className={cn(buttonVariants({ variant: "secondary", size: "lg" }))} to="/">
             На главную
-          </ButtonLink>
+          </Link>
         </div>
       </main>
     </div>

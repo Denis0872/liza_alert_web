@@ -1,141 +1,182 @@
-import { ArrowRight, HeartHandshake, ShieldAlert, Users } from 'lucide-react'
-import { ButtonLink } from '../components/ui/Button'
-
-const newsItems = [
-  {
-    title: 'Набор в группу прозвона',
-    date: '17 апреля 2026',
-    excerpt: 'Открыт набор добровольцев, готовых помогать на этапе первичного сбора информации.',
-  },
-  {
-    title: 'Вводная лекция для новичков',
-    date: '16 апреля 2026',
-    excerpt: 'Короткий вводный поток по ролям, безопасности и базовым действиям в первые часы поиска.',
-  },
-  {
-    title: 'Памятка: если пропал человек',
-    date: '15 апреля 2026',
-    excerpt: 'Собрали базовые шаги для родственников: кого уведомить, что подготовить, куда обращаться.',
-  },
-]
+import { ArrowRight, BellRing, HeartHandshake, ShieldAlert, Users } from "lucide-react"
+import { Link, useSearchParams } from "react-router-dom"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Badge } from "@/components/ui/badge"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import { ScrollNavigationMenu } from "@/components/ui/scroll-navigation-menu"
+import { StateBlock } from "@/components/ui/StateBlock"
+import { demoNews } from "@/data/news"
+import { cn } from "@/lib/utils"
 
 const faqItems = [
   {
-    question: 'Что делать, если пропал близкий человек?',
-    answer:
-      'Сразу подайте заявление в полицию и оставьте заявку в отряде. Не ждите 24 часа. Подготовьте фото, особые приметы и последние известные данные.',
+    id: "item-1",
+    q: "Что делать, если пропал близкий человек?",
+    a: "Сразу обращайтесь в полицию и параллельно оставляйте заявку на поиск. Подготовьте фото, приметы и последние известные данные о местонахождении.",
   },
   {
-    question: 'Как стать добровольцем?',
-    answer:
-      'Перейдите в рабочую зону, выберите роль добровольца и заполните короткую анкету. После этого получите базовые инструкции и доступ к активам.',
+    id: "item-2",
+    q: "Можно ли стать добровольцем без опыта?",
+    a: "Да. В MVP достаточно выбрать режим добровольца и пройти базовую инструкцию, после чего откроется доступ к рабочей зоне.",
   },
   {
-    question: 'Кому доступна информация о поиске?',
-    answer:
-      'В MVP показывается только необходимый минимум данных. Чувствительная информация и внутренние маршруты ограничены рабочей зоной.',
+    id: "item-3",
+    q: "Кто видит данные поиска?",
+    a: "Публичная часть показывает только безопасный минимум. Рабочие данные доступны только в защищенной зоне приложения.",
   },
 ]
 
 export function LandingPage() {
+  const [searchParams] = useSearchParams()
+  const state = searchParams.get("state")
+  const latestNews = state === "empty" ? [] : demoNews.slice(0, 3)
+
   return (
     <div className="public-shell">
       <div className="public-overlay" />
-      <header className="public-header public-header-strong">
-        <div className="brand">
-          <img alt="ЛизаАлерт" className="brand-logo" src="/lizaalert-logo.svg" />
-          <div>
-            <p className="brand-name">Liza Alert</p>
-            <p className="brand-sub">Санкт-Петербург и ЛО</p>
-          </div>
-        </div>
-        <nav className="public-menu">
-          <a href="#news">Новости</a>
-          <a href="#faq">FAQ</a>
-          <a href="#contacts">Контакты</a>
-        </nav>
-        <div className="public-nav">
-          <ButtonLink to="/app/dashboard" variant="secondary">
-            Рабочая зона
-          </ButtonLink>
-          <ButtonLink to="/apply">Оставить заявку</ButtonLink>
-        </div>
-      </header>
+      <ScrollNavigationMenu />
 
       <main className="hero">
         <section className="hero-copy">
-          <p className="eyebrow">MVP Первая версия</p>
-          <h1>Простой интерфейс для родственников, добровольцев и координаторов.</h1>
+          <Badge className="mb-3" variant="secondary">
+            MVP 0.1
+          </Badge>
+          <h1>Потеряться не значит пропасть.</h1>
           <p>
-            На старте родственник может оставить заявку на поиск, а доброволец быстро перейти в
-            рабочий режим и отметить готовность к выезду.
+            Мы делаем понятный цифровой вход для родственников и рабочий интерфейс для добровольцев
+            и координаторов. Без перегруженности, с фокусом на скорость действий.
           </p>
-          <div className="hero-actions">
-            <ButtonLink to="/apply">
+          <div className="hero-actions mt-4">
+            <Link className={cn(buttonVariants({ size: "lg" }))} to="/apply">
               Подать заявку
               <ArrowRight size={18} />
-            </ButtonLink>
-            <ButtonLink to="/app/dashboard" variant="secondary">
+            </Link>
+            <Link className={cn(buttonVariants({ variant: "secondary", size: "lg" }))} to="/app/dashboard">
               Я доброволец
-            </ButtonLink>
+            </Link>
           </div>
-          <div className="hotline-strip">
+          <div className="hotline-strip mt-4">
             <strong>Горячая линия:</strong>
             <span>8 800 700 54 52</span>
           </div>
         </section>
+
         <section className="hero-cards">
-          <article className="metric-card">
-            <ShieldAlert size={18} />
-            <h3>Активные поиски</h3>
-            <strong>12</strong>
-          </article>
-          <article className="metric-card">
-            <Users size={18} />
-            <h3>На смене</h3>
-            <strong>168</strong>
-          </article>
-          <article className="metric-card">
-            <HeartHandshake size={18} />
-            <h3>Новые заявки</h3>
-            <strong>4</strong>
-          </article>
+          <Card className="bg-white/90">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ShieldAlert size={16} />
+                Активные поиски
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-4xl font-bold tracking-tight">12</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/90">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Users size={16} />
+                На смене
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-4xl font-bold tracking-tight">168</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/90">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <HeartHandshake size={16} />
+                Новые заявки
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-4xl font-bold tracking-tight">4</p>
+            </CardContent>
+          </Card>
         </section>
       </main>
 
       <section className="landing-section" id="news">
         <div className="section-head">
-          <h2>Примитивная лента новостей</h2>
-          <a href="https://lizaalert.org/novosti-otryada/" rel="noreferrer" target="_blank">
-            Все новости
-          </a>
+          <h2>Последние новости</h2>
+          <Link className={cn(buttonVariants({ variant: "outline" }))} to="/news">
+            Открыть все
+          </Link>
         </div>
-        <div className="news-grid">
-          {newsItems.map((item) => (
-            <article className="news-card" key={item.title}>
-              <span>{item.date}</span>
-              <h3>{item.title}</h3>
-              <p>{item.excerpt}</p>
-            </article>
-          ))}
-        </div>
+        {state === "loading" ? (
+          <StateBlock
+            description="Подгружаем три последние новости для главной страницы."
+            kind="loading"
+            title="Загрузка новостей"
+          />
+        ) : state === "error" ? (
+          <StateBlock
+            description="Лента временно недоступна. Откройте страницу новостей позже."
+            kind="error"
+            title="Ошибка загрузки"
+          />
+        ) : latestNews.length === 0 ? (
+          <StateBlock
+            description="Последние новости пока отсутствуют."
+            kind="empty"
+            title="Нет публикаций"
+          />
+        ) : (
+          <div className="news-grid">
+            {latestNews.map((item) => (
+              <Card className="bg-white" key={item.id}>
+                <CardHeader>
+                  <CardDescription>{item.date}</CardDescription>
+                  <CardTitle>{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p>{item.excerpt}</p>
+                  <Link className={cn(buttonVariants({ variant: "outline" }), "mt-3")} to={`/news/${item.id}`}>
+                    Читать
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </section>
 
       <section className="landing-section" id="faq">
         <div className="section-head">
           <h2>Что делать (FAQ)</h2>
+          <Badge variant="outline">Простой режим</Badge>
         </div>
-        <div className="faq-list">
+        <Accordion defaultValue={["item-1"]}>
           {faqItems.map((item) => (
-            <details key={item.question}>
-              <summary>{item.question}</summary>
-              <p>{item.answer}</p>
-            </details>
+            <AccordionItem key={item.id} value={item.id}>
+              <AccordionTrigger>{item.q}</AccordionTrigger>
+              <AccordionContent>{item.a}</AccordionContent>
+            </AccordionItem>
           ))}
+        </Accordion>
+      </section>
+
+      <section className="landing-section">
+        <div className="section-head">
+          <h2>Подписка на обновления</h2>
+          <Badge className="gap-1" variant="secondary">
+            <BellRing size={12} />
+            Бета-функция
+          </Badge>
+        </div>
+        <div className="subscribe-row">
+          <Input className="h-11 bg-white/85" placeholder="Введите телефон или email" />
+          <Button className="h-11 px-6">Подписаться</Button>
         </div>
       </section>
 
       <footer className="landing-footer" id="contacts">
+        <Separator className="mb-3 bg-white/20" />
         <p>Для СМИ: smi@lizaalert.org</p>
         <p>Для партнёрства: DMS@lizaalert.org</p>
         <p>Общие вопросы: org@lizaalert.org</p>

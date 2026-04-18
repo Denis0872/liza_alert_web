@@ -10,6 +10,17 @@ export type SearchCard = {
   status: SearchStatus
 }
 
+export type SearchPersonDetails = {
+  id: string
+  fullName: string
+  age: number
+  district: string
+  status: SearchStatus
+  photoUrl: string
+  description: string
+  specialSigns: string[]
+}
+
 export const demoSearches: SearchCard[] = [
   {
     id: 'LA-2451',
@@ -44,4 +55,44 @@ export const statusLabel: Record<SearchStatus, string> = {
   ACTIVE: 'Актив',
   AUTONOMOUS: 'Автоном',
   DONE: 'Завершен',
+}
+
+const detailsMap: Record<string, SearchPersonDetails> = {
+  "LA-2451": {
+    id: "LA-2451",
+    fullName: "Иванов Сергей Петрович",
+    age: 64,
+    district: "Приморский район",
+    status: "ACTIVE",
+    photoUrl: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80",
+    description:
+      "Ушел из дома утром 17 апреля. Был одет в темно-синюю куртку и серую шапку. Может быть дезориентирован, при себе телефон без ответа.",
+    specialSigns: ["Рост 178 см", "Седые волосы", "Темные очки в тонкой оправе"],
+  },
+  "LA-2452": {
+    id: "LA-2452",
+    fullName: "Крылова Мария Андреевна",
+    age: 12,
+    district: "Выборгский район",
+    status: "ACTIVE",
+    photoUrl: "https://images.unsplash.com/photo-1481214110143-ed630356e1bb?auto=format&fit=crop&w=600&q=80",
+    description:
+      "Не вернулась домой после школы. Последний раз видели у автобусной остановки у станции метро. Возможно, направлялась в сторону парка.",
+    specialSigns: ["Рост 154 см", "Русые волосы", "Черный рюкзак с белой полосой"],
+  },
+  "LA-2448": {
+    id: "LA-2448",
+    fullName: "Смирнов Алексей Игоревич",
+    age: 48,
+    district: "Гатчина",
+    status: "AUTONOMOUS",
+    photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80",
+    description:
+      "Поиск переведен в автономный режим. Последний контакт был в лесном массиве у садоводства. Требуется проверка точек и опрос очевидцев.",
+    specialSigns: ["Рост 183 см", "Короткая стрижка", "Камуфляжная куртка"],
+  },
+}
+
+export function getSearchDetails(id: string): SearchPersonDetails | undefined {
+  return detailsMap[id]
 }
