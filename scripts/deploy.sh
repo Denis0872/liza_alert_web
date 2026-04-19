@@ -52,7 +52,8 @@ git pull --ff-only
 
 if [[ -f package-lock.json ]]; then
   info "Устанавливаю зависимости через npm ci"
-  npm ci
+  # npm 9.x can miss optional native deps (tailwind oxide); fallback keeps deploy stable.
+  npm ci || npm install
 else
   info "Устанавливаю зависимости через npm install"
   npm install
