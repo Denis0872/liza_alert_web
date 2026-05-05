@@ -1,5 +1,6 @@
 import {
   Bell,
+  ClipboardList,
   ChevronRight,
   Home,
   LayoutGrid,
@@ -7,17 +8,21 @@ import {
   Megaphone,
   UserRound,
 } from 'lucide-react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 
 const items = [
   { to: '/app/dashboard', label: 'Панель', icon: LayoutGrid },
   { to: '/app/searches', label: 'Поиски', icon: ListChecks },
   { to: '/app/notifications', label: 'Уведомления', icon: Bell },
+  { to: '/app/inforg/requests', label: 'Заявки', icon: ClipboardList },
   { to: '/app/profile', label: 'Профиль', icon: UserRound },
 ]
 
 export function AppShell() {
+  const { pathname } = useLocation()
+  const showReadyButton = pathname === '/app/dashboard'
+
   return (
     <div className="frame">
       <aside className="sidebar">
@@ -57,7 +62,7 @@ export function AppShell() {
             <ChevronRight size={14} />
             <strong>MVP Скелет</strong>
           </div>
-          <Button type="button">Я готов выехать</Button>
+          {showReadyButton ? <Button type="button">Я готов выехать</Button> : null}
         </header>
         <section className="content">
           <Outlet />

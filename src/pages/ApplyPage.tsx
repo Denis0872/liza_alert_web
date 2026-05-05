@@ -18,6 +18,10 @@ export function ApplyPage() {
           <TextInput label="Возраст" placeholder="Например: 64" type="number" />
           <TextInput label="Последнее место" placeholder="Например: Приморский район, ул. ... " />
           <TextInput label="Телефон заявителя" placeholder="+7..." type="tel" />
+          <label className="field field-full">
+            <span>Описание</span>
+            <textarea className="inforg-textarea" placeholder="Опишите обстоятельства, приметы, важные детали..." />
+          </label>
         </div>
         <div className="hero-actions">
           <Button type="button">Отправить заявку</Button>

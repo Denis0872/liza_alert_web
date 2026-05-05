@@ -8,6 +8,7 @@ import { NewsDetailsPage } from './pages/NewsDetailsPage'
 import { NewsPage } from './pages/NewsPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { NotificationsPage } from './pages/NotificationsPage'
+import { InforgRequestsPage } from './pages/InforgRequestsPage'
 import { ProfilePage } from './pages/ProfilePage'
 import { PublicSectionPage } from './pages/PublicSectionPage'
 import { SearchDetailsPage } from './pages/SearchDetailsPage'
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
       { path: 'searches', element: <SearchesPage /> },
       { path: 'searches/:id', element: <SearchDetailsPage /> },
       { path: 'notifications', element: <NotificationsPage /> },
+      { path: 'inforg/requests', element: <InforgRequestsPage /> },
       { path: 'profile', element: <ProfilePage /> },
     ],
   },
